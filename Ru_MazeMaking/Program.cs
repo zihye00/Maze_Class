@@ -8,7 +8,9 @@ namespace Ru_MazeMaking
         {
             //함수 시작하자마자 initialize실행
             Board board = new Board();
-            board.Initialize(25);
+            Player player = new Player();
+            board.Initialize(25, player);
+            player.Initialize(1, 1, board.Size - 2, board.Size - 2, board);
 
             Console.CursorVisible = false;
 
@@ -36,11 +38,13 @@ namespace Ru_MazeMaking
                 {
                     continue;
                 }
+                int deltaTick = currentTick - lastTick;
                 lastTick = currentTick;
                 #endregion
 
                 //입력
-                //로직
+                //로직 - 데이터 관리
+                player.Update(deltaTick);
                 //렌더링
 
                 Console.SetCursorPosition(0, 0);

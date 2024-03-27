@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\p9464\\Videos\\Program\\Ru_Maze\\Ru_MazeMaking\\Ru_MazeMaking\\Ru_MazeMaking.csproj": {}
+    "C:\\Users\\p9464\\Desktop\\Maze_Class\\Ru_MazeMaking\\Ru_MazeMaking.csproj": {}
   },
   "projects": {
-    "C:\\Users\\p9464\\Videos\\Program\\Ru_Maze\\Ru_MazeMaking\\Ru_MazeMaking\\Ru_MazeMaking.csproj": {
+    "C:\\Users\\p9464\\Desktop\\Maze_Class\\Ru_MazeMaking\\Ru_MazeMaking.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\p9464\\Videos\\Program\\Ru_Maze\\Ru_MazeMaking\\Ru_MazeMaking\\Ru_MazeMaking.csproj",
+        "projectUniqueName": "C:\\Users\\p9464\\Desktop\\Maze_Class\\Ru_MazeMaking\\Ru_MazeMaking.csproj",
         "projectName": "Ru_MazeMaking",
-        "projectPath": "C:\\Users\\p9464\\Videos\\Program\\Ru_Maze\\Ru_MazeMaking\\Ru_MazeMaking\\Ru_MazeMaking.csproj",
+        "projectPath": "C:\\Users\\p9464\\Desktop\\Maze_Class\\Ru_MazeMaking\\Ru_MazeMaking.csproj",
         "packagesPath": "C:\\Users\\p9464\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\p9464\\Videos\\Program\\Ru_Maze\\Ru_MazeMaking\\Ru_MazeMaking\\obj\\",
+        "outputPath": "C:\\Users\\p9464\\Desktop\\Maze_Class\\Ru_MazeMaking\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\p9464\\AppData\\Roaming\\NuGet\\NuGet.Config",

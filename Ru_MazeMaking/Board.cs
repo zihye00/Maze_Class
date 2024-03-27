@@ -4,9 +4,10 @@
     {
         const char CIRCLE = '\u25cf';
 
-        public TileType[,] _tile;
-        public int _size;
+        public TileType[,] Tile { get; private set; }
+        public int Size { get; private set; }
 
+        Player _player;
 
         public enum TileType
         {
@@ -14,14 +15,16 @@
             Wall,
         }
 
-        public void Initialize(int size)
+        public void Initialize(int size, Player player)
         {
             // size가 홀수여야 함(짝수면 리턴)
             if (size % 2 == 0)
                 return;
 
-            _tile = new TileType[size, size];
-            _size = size;
+            _player = player;
+
+            Tile = new TileType[size, size];
+            Size = size;
 
             // Mazes for Programmers
 
@@ -32,52 +35,52 @@
         void GenerateBySideWinder()
         {
             // 일단 길을 다 막아버리는 작업
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
-                for (int x = 0; x < _size; x++)
+                for (int x = 0; x < Size; x++)
                 {
                     if (x % 2 == 0 || y % 2 == 0)
-                        _tile[y, x] = TileType.Wall;
+                        Tile[y, x] = TileType.Wall;
                     else
-                        _tile[y, x] = TileType.Empty;
+                        Tile[y, x] = TileType.Empty;
                 }
             }
 
             Random rand = new Random();
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
                 int count = 1;
-                for (int x = 0; x < _size; x++)
+                for (int x = 0; x < Size; x++)
                 {
                     if (x % 2 == 0 || y % 2 == 0)
                         continue;
 
                     //마지막 점이라면 멈추도록(벽 제외
-                    if (y == _size - 2 && x == _size - 2)
+                    if (y == Size - 2 && x == Size - 2)
                         continue;
 
                     //오른쪽 끝까지 가지 않도록 막음
-                    if (y == _size - 2)
+                    if (y == Size - 2)
                     {
-                        _tile[y, x + 1] = TileType.Empty;
+                        Tile[y, x + 1] = TileType.Empty;
                         continue;
                     }
                     //아래 끝까지 가지 않도록 막음
-                    if (x == _size - 2)
+                    if (x == Size - 2)
                     {
-                        _tile[y + 1, x] = TileType.Empty;
+                        Tile[y + 1, x] = TileType.Empty;
                         continue;
                     }
 
                     if (rand.Next(0, 2) == 0)
                     {
-                        _tile[y, x + 1] = TileType.Empty;
+                        Tile[y, x + 1] = TileType.Empty;
                         count++;
                     }
                     else
                     {
                         int randomIndex = rand.Next(0, count);
-                        _tile[y + 1, x - randomIndex * 2] = TileType.Empty; //점 두개씩 넘어가는 거라 *2
+                        Tile[y + 1, x - randomIndex * 2] = TileType.Empty; //점 두개씩 넘어가는 거라 *2
                         count = 1;
                     }
                 }
@@ -88,64 +91,75 @@
         void GenerateByBinaryTree()
         {
             // 일단 길을 다 막아버리는 작업
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
-                for (int x = 0; x < _size; x++)
+                for (int x = 0; x < Size; x++)
                 {
                     if (x % 2 == 0 || y % 2 == 0)
-                        _tile[y, x] = TileType.Wall;
+                        Tile[y, x] = TileType.Wall;
                     else
-                        _tile[y, x] = TileType.Empty;
+                        Tile[y, x] = TileType.Empty;
                 }
             }
 
             // 랜덤으로 우측 혹은 아래로 길을 뚫는 작업
             Random rand = new Random();
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
-                for (int x = 0; x < _size; x++)
+                for (int x = 0; x < Size; x++)
                 {
                     if (x % 2 == 0 || y % 2 == 0)
                         continue;
 
                     //마지막 점이라면 멈추도록(벽 제외
-                    if (y == _size - 2 && x == _size - 2)
+                    if (y == Size - 2 && x == Size - 2)
                         continue;
 
                     //오른쪽 끝까지 가지 않도록 막음
-                    if (y == _size - 2)
+                    if (y == Size - 2)
                     {
-                        _tile[y, x + 1] = TileType.Empty;
+                        Tile[y, x + 1] = TileType.Empty;
                         continue;
                     }
                     //아래 끝까지 가지 않도록 막음
-                    if (x == _size - 2)
+                    if (x == Size - 2)
                     {
-                        _tile[y + 1, x] = TileType.Empty;
+                        Tile[y + 1, x] = TileType.Empty;
                         continue;
                     }
 
                     if (rand.Next(0, 2) == 0)
                     {
-                        _tile[y, x + 1] = TileType.Empty;
+                        Tile[y, x + 1] = TileType.Empty;
                     }
                     else
                     {
-                        _tile[y + 1, x] = TileType.Empty;
+                        Tile[y + 1, x] = TileType.Empty;
                     }
                 }
             }
         }
-
+            
         public void Render()
-        {
+        {    
             ConsoleColor prevColor = Console.ForegroundColor;
 
-            for (int y = 0; y < _size; y++)
+            for (int y = 0; y < Size; y++)
             {
-                for (int x = 0; x < _size; x++)
+                for (int x = 0; x < Size; x++)
                 {
-                    Console.ForegroundColor = GetTileColor(_tile[y, x]);
+
+                    // 플레이어 좌표를 갖고 와서, 그 좌표랑 현재 y, x가 일치하면 플레이어 전용 색상으로 표시.
+                    if ( y == _player.PosY && x == _player.PosX)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = GetTileColor(Tile[y, x]);
+                    }
+
+                    //Console.ForegroundColor = GetTileColor(Tile[y, x]);
                     Console.Write(CIRCLE);
                 }
                 Console.WriteLine(); //25개마다 줄넘기
@@ -172,7 +186,7 @@
 }
 
 //왜 Y좌표부터 계산하는지
-//_size, size 둘다 사용하는 이유? 외과타일 선정할떄
+//Size, size 둘다 사용하는 이유? 외과타일 선정할떄
 //콘솔창 줄간격 때문에? 미로 모양이 1:1로 안보여 줄간격 0.6으로 설정
 // 콘솔창 실행 안되던 것은 프레임 단위 -> currenttick &로 추가해줌
 
@@ -253,8 +267,8 @@
 //    //List
 //    class MyList<T>
 //    {
-//        const int DEFAULT_SIZE = 1;
-//        T[] _data = new T[DEFAULT_SIZE];
+//        const int DEFAULTSize = 1;
+//        T[] _data = new T[DEFAULTSize];
 
 //        public int Count = 0; //실제로 사용중인 데이터 개수
 //        public int Capacity { get { return _data.Length; } } // 예약된 데이터 개수
